@@ -8,12 +8,9 @@
 // memanggil file functions.php
 require_once __DIR__ . '/includes/functions.php';
 
-// Ambil keyword pencarian jika ada
-$page_title = 'Uji Fungsi Modular - Percobaan 1';
-$daftar_mahasiswa = get_all_mahasiswa();
-$total_semua = count_total_mahasiswa();
 // Percobaan 4-4 Langkah 2
-$keyword = isset($_POST['search']) ? trim($_POST['search']) : '';
+// PERBAIKAN: Typo $GET_ diubah menjadi $_GET
+$keyword = isset($_GET['search']) ? trim($_GET['search']) : '';
 $daftar_mahasiswa = get_all_mahasiswa($keyword);
 
 $total_semua = count_total_mahasiswa();
@@ -72,8 +69,9 @@ require_once __DIR__ . '/includes/header.php';
 
     <!-- Toolbar Pencarian Server-Side via GET Request -->
     <div class="table-toolbar">
-        <form action="index.php#daftar-mahasiswa" method="POST" class="search-form">
-
+        <!-- PERBAIKAN: Menghapus fragment #daftar-mahasiswa dari action -->
+        <form action="index.php" method="GET" class="search-form">
+            
             <input 
                 type="search" 
                 name="search" 
@@ -82,7 +80,8 @@ require_once __DIR__ . '/includes/header.php';
                 value="<?= htmlspecialchars($keyword) ?>">
             <button type="submit" class="btn btn-primary btn-sm">Cari</button>
             <?php if (!empty($keyword)): ?>
-                <a href="index.php#daftar-mahasiswa" class="btn btn-secondary btn-sm">Reset</a>
+                <!-- PERBAIKAN: Menghapus fragment #daftar-mahasiswa dari href -->
+                <a href="index.php" class="btn btn-secondary btn-sm">Reset</a>
             <?php endif; ?>
         </form>
 
@@ -118,8 +117,8 @@ require_once __DIR__ . '/includes/header.php';
                         <?= !empty($keyword)
                             ? 'Tidak ditemukan data mahasiswa dengan kata kunci "' .$keyword. '".' 
                             : 'Belum ada data mahasiswa yang tersimpan.' ?>
-                            </td>
-                        <tr>
+                    </td>
+                </tr> <!-- PERBAIKAN: Menutup tag tr dengan benar -->
                     
                 <?php else: ?>
 
@@ -138,8 +137,7 @@ require_once __DIR__ . '/includes/header.php';
                             <td>
                                 <!-- Percobaan 4-2 Langkah 5 -->
                                 <a href="proses_hapus.php?npm=<?=urlencode($mhs['npm']) ?>"
-                                class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus mahasiswa: <?= htmlspecialchars(addslashes($mhs['nama'])) ?> 
-                                (npm: <?= htmlspecialchars($mhs['npm']) ?>)?');">Hapus</a>
+                                class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus mahasiswa: <?= htmlspecialchars(addslashes($mhs['nama'])) ?> (npm: <?= htmlspecialchars($mhs['npm']) ?>)?');">Hapus</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -171,7 +169,7 @@ require_once __DIR__ . '/includes/header.php';
                         placeholder="Contoh: 230101001" 
                         required 
                         pattern="[0-9]{8,12}">
-                    <span class="form-help">* Wajib 8-12 digit angka.</span>
+                    <span class="form-help">Wajib 8-12 digit angka.</span>
                 </div>
 
                 <div class="form-group">
@@ -184,7 +182,7 @@ require_once __DIR__ . '/includes/header.php';
                         placeholder="Contoh: Ahmad Fauzi" 
                         required 
                         minlength="3">
-                    <span class="form-help">* Minpmal 3 karakter.</span>
+                    <span class="form-help">Minimal 3 karakter.</span>
                 </div>
 
                 <div class="form-group">
@@ -196,7 +194,7 @@ require_once __DIR__ . '/includes/header.php';
                         <option value="Teknologi Informasi">Teknologi Informasi</option>
                         <option value="Rekayasa Perangkat Lunak">Rekayasa Perangkat Lunak</option>
                     </select>
-                    <span class="form-help">* Pilih salah satu program studi.</span>
+                    <span class="form-help">Pilih salah satu program studi.</span>
                 </div>
 
                 <div class="form-group">
@@ -210,7 +208,7 @@ require_once __DIR__ . '/includes/header.php';
                         required 
                         min="2018" 
                         max="2026">
-                    <span class="form-help">* Tahun antara 2018 - 2026.</span>
+                    <span class="form-help">Tahun antara 2018 - 2026.</span>
                 </div>
 
                 <div class="form-group full-width">
@@ -222,7 +220,7 @@ require_once __DIR__ . '/includes/header.php';
                         class="form-input" 
                         placeholder="Contoh: ahmad.fauzi@example.com" 
                         required>
-                    <span class="form-help">* Masukkan alamat email valid.</span>
+                    <span class="form-help">Masukkan alamat email valid.</span>
                 </div>
             </div>
 
@@ -235,4 +233,4 @@ require_once __DIR__ . '/includes/header.php';
 </section>
 
 <!-- memanggil file footer.php -->
-
+<?php require_once __DIR__ . '/includes/footer.php'; ?>
