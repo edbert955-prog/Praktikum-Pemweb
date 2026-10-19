@@ -8,7 +8,7 @@
 require_once __DIR__ . '/includes/functions.php';
 
 // Pastikan request menggunakan metode POST
-if ($_SERVER['REQUEST_METHOD'] === 'post') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $npm = $_POST['npm'] ?? '';
     $nama = $_POST['nama'] ?? '';
     $program_studi = $_POST['program_studi'] ?? '';

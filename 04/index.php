@@ -13,7 +13,7 @@ $page_title = 'Uji Fungsi Modular - Percobaan 1';
 $daftar_mahasiswa = get_all_mahasiswa();
 $total_semua = count_total_mahasiswa();
 // Percobaan 4-4 Langkah 2
-$keyword = isset($GET['search']) ? trim($_POST['search']) : '';
+$keyword = isset($_POST['search']) ? trim($_POST['search']) : '';
 $daftar_mahasiswa = get_all_mahasiswa($keyword);
 
 $total_semua = count_total_mahasiswa();
@@ -72,7 +72,8 @@ require_once __DIR__ . '/includes/header.php';
 
     <!-- Toolbar Pencarian Server-Side via GET Request -->
     <div class="table-toolbar">
-        <form action="index.php#daftar-mahasiswa" method="get" class="search-form">
+        <form action="index.php#daftar-mahasiswa" method="POST" class="search-form">
+
             <input 
                 type="search" 
                 name="search" 
